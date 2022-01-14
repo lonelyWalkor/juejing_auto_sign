@@ -55,6 +55,7 @@ const getTarck = maps => {
 }
 
 let runNum = 0
+let errorCalled = false // 报错后，尝试再次执行
 const autoGame = async () => {
   try {
     runNum++
@@ -89,8 +90,10 @@ const autoGame = async () => {
     })
   } catch (e) {
     console.log('捕获到错误 => ', e)
+    if (errorCalled) return
+    console.log('20s后尝试再次执行🎮')
     setTimeout(() => {
-      console.log('20s后尝试再次执行')
+      errorCalled = true
       autoGame()
     }, 20000)
   }
