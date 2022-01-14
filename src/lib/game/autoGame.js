@@ -71,7 +71,7 @@ const autoGame = async () => {
       console.log(
         `Game over, Reward: ${res.body.data.realDiamond}, Today reward: ${res.body.data.todayDiamond}, Today limit reward: ${res.body.data.todayLimitDiamond}`
       )
-
+      console.log('10s后开始下一轮游戏🎮,请稍等～')
       if (res.body.data.realDiamond < 40) {
         // 奖励小于40刷新下地图
         await exp.freshMap()
@@ -79,9 +79,8 @@ const autoGame = async () => {
       // 没达到今日上限继续自动游戏
       if (res.body.data.todayDiamond < res.body.data.todayLimitDiamond) {
         setTimeout(() => {
-          console.log('3后开始下一轮游戏🎮')
           autoGame()
-        }, 3000)
+        }, 10000) // 设置10s执行一次，防止接口调用太过频繁，服务器报500的错
       } else {
         console.log('今日奖励已达上限！')
       }
